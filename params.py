@@ -2,7 +2,7 @@ import torch
 
 ###############################################
 
-EXP_NAME = "IAM-339-15-E3D3-LR0.00005-bs8"; RESUME = False
+EXP_NAME = "IAM-339-15-E3D3-LR0.00005-bs8"; RESUME = True
 
 DATASET = 'IAM'
 if DATASET == 'IAM':
@@ -27,10 +27,10 @@ TN_ENC_LAYERS = 3
 TN_DEC_LAYERS = 3
 ALPHABET = 'Only thewigsofrcvdampbkuq.A-210xT5\'MDL,RYHJ"ISPWENj&BC93VGFKz();#:!7U64Q8?+*ZX/%'
 VOCAB_SIZE = len(ALPHABET)
-G_LR = 0.00005
-D_LR = 0.00005
-W_LR = 0.00005
-OCR_LR = 0.00005
+G_LR = 0.0002
+D_LR = 0.0002
+W_LR = 0.0002
+OCR_LR = 0.0002
 EPOCHS = 100000
 NUM_CRITIC_GOCR_TRAIN = 2
 NUM_CRITIC_DOCR_TRAIN = 1
@@ -42,7 +42,7 @@ DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 IS_SEQ = True
 NUM_WORDS = 3
 if not IS_SEQ: NUM_WORDS = NUM_EXAMPLES
-IS_CYCLE = False
+IS_CYCLE = True
 IS_KLD = False
 ADD_NOISE = False
 ALL_CHARS = False
