@@ -2,7 +2,7 @@ import torch
 
 ###############################################
 
-EXP_NAME = "IAM-339-15-E3D3-LR0.00005-bs8"; RESUME = True
+EXP_NAME = "IAM-339-15-E3D3-LR0.0002-bs8"; RESUME = True
 
 DATASET = 'IAM'
 if DATASET == 'IAM':
