@@ -483,7 +483,7 @@ class TRGAN(nn.Module):
         self.KLD = 0 
 
 
-        with open('../Lexicon/english_words.txt', 'rb') as f:
+        with open(ENGLISH_WORDS_PATH, 'rb') as f:
             self.lex = f.read().splitlines()
         lex=[]
         for word in self.lex:
