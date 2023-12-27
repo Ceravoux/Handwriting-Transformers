@@ -14,7 +14,7 @@ from .OCR_network import *
 from models.blocks import LinearBlock, Conv2dBlock, ResBlocks, ActFirstResBlock
 from util.util import toggle_grad, loss_hinge_dis, loss_hinge_gen, ortho, default_ortho, toggle_grad, prepare_z_y, \
     make_one_hot, to_device, multiple_replace, random_word
-from models.inception import InceptionV3, calculate_frechet_distance
+# from models.inception import InceptionV3, calculate_frechet_distance
 import cv2
 
 class FCNDecoder(nn.Module):
@@ -412,10 +412,10 @@ class Generator(nn.Module):
 
 
 
-        Lcycle1 = torch.sum([self.l1loss(memory[m_i], memory_T[m_j]) for m_i in range(memory.shape[0]) for m_j in range(memory_T.shape[0])])/(memory.shape[0]*memory_T.shape[0])
+        Lcycle1 = torch.stack([self.l1loss(memory[m_i], memory_T[m_j]) for m_i in range(memory.shape[0]) for m_j in range(memory_T.shape[0])]).sum(dim=0)/(memory.shape[0]*memory_T.shape[0])
         OUT_Feats1 = torch.cat(OUT_Feats1, 1)[0]; OUT_Feats2 = torch.cat(OUT_Feats2, 1)[0]
 
-        Lcycle2 = torch.sum([self.l1loss(OUT_Feats1[f_i], OUT_Feats2[f_j]) for f_i in range(OUT_Feats1.shape[0]) for f_j in range(OUT_Feats2.shape[0])])/(OUT_Feats1.shape[0]*OUT_Feats2.shape[0])
+        Lcycle2 = torch.stack([self.l1loss(OUT_Feats1[f_i], OUT_Feats2[f_j]) for f_i in range(OUT_Feats1.shape[0]) for f_j in range(OUT_Feats2.shape[0])]).sum(dim=0)/(OUT_Feats1.shape[0]*OUT_Feats2.shape[0])
 
         if IS_KLD:
         
@@ -461,8 +461,8 @@ class TRGAN(nn.Module):
         self.netOCR = CRNN().to(DEVICE)
         self.OCR_criterion = CTCLoss(zero_infinity=True, reduction='none')
 
-        block_idx = InceptionV3.BLOCK_INDEX_BY_DIM[2048]
-        self.inception = InceptionV3([block_idx]).to(DEVICE)
+        # block_idx = InceptionV3.BLOCK_INDEX_BY_DIM[2048]
+        # self.inception = InceptionV3([block_idx]).to(DEVICE)
 
       
         self.optimizer_G = torch.optim.Adam(self.netG.parameters(),
