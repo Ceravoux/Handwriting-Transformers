@@ -2,9 +2,9 @@ import torch
 
 ###############################################
 
-EXP_NAME = "IAM-339-15-E3D3-LR0.0002-bs8"; RESUME = True
+EXP_NAME = "CVL-339-15-E3D3-LR0.0002-bs8"; RESUME = True
 
-DATASET = 'IAM'
+DATASET = 'CVL'
 if DATASET == 'IAM':
     DATASET_PATHS = 'files/IAM-32.pickle'
     NUM_WRITERS = 339

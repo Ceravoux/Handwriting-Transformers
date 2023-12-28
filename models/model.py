@@ -517,7 +517,7 @@ class TRGAN(nn.Module):
 
         f = open('mytext.txt', 'r') 
 
-        self.text = [j.encode() for j in sum([i.split(' ') for i in f.readlines()], [])][:NUM_EXAMPLES]
+        self.text = [j.encode() for j in sum([i.split(' ') for i in f.readlines()], [])]#[:NUM_EXAMPLES]
         self.eval_text_encode, self.eval_len_text = self.netconverter.encode(self.text)
         self.eval_text_encode = self.eval_text_encode.to(DEVICE).repeat(batch_size, 1, 1)
 
@@ -529,7 +529,7 @@ class TRGAN(nn.Module):
         word_t = []
         word_l = []
 
-        gap = np.ones([32,16])
+        gap = np.ones([IMG_HEIGHT,16])
 
         line_wids = []
 
@@ -556,7 +556,7 @@ class TRGAN(nn.Module):
 
         for l in word_l:
 
-            pad_ = np.ones([32,max(line_wids) - l.shape[1]])
+            pad_ = np.ones([IMG_HEIGHT,max(line_wids) - l.shape[1]])
 
             page_.append(np.concatenate([l, pad_], 1))
             page_.append(gap_h)
@@ -569,7 +569,7 @@ class TRGAN(nn.Module):
         word_t = []
         word_l = []
 
-        gap = np.ones([32,16])
+        gap = np.ones([IMG_HEIGHT,16])
 
         line_wids = []
 
@@ -577,8 +577,7 @@ class TRGAN(nn.Module):
 
         for idx, st in enumerate((sdata_)):
 
-            word_t.append((st[0,0,:,:int(self.input['swids'].cpu().numpy()[0][idx])
-].cpu().numpy()+1)/2)
+            word_t.append((st[0,0,:,:int(self.input['swids'].cpu().numpy()[0][idx])].cpu().numpy()+1)/2)
 
             word_t.append(gap)
 
