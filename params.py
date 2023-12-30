@@ -2,7 +2,7 @@ import torch
 
 ###############################################
 
-EXP_NAME = "CVL-339-15-E3D3-LR0.0002-bs8"; RESUME = True
+EXP_NAME = "IAM-339-15-E3D3-LR0.0002-bs8"; RESUME = True
 
 DATASET = 'CVL'
 if DATASET == 'IAM':
@@ -48,7 +48,7 @@ ADD_NOISE = False
 ALL_CHARS = False
 SAVE_MODEL = 5
 SAVE_MODEL_HISTORY = 100
-
+UPLOAD_IMG = 10
 def init_project():
     import os, shutil
     if not os.path.isdir('saved_images'): os.mkdir('saved_images')

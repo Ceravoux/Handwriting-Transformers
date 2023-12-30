@@ -106,9 +106,8 @@ def main():
                     })
 
                     
-        
-        wandb.log({ "result":[wandb.Image(page, caption="page"),wandb.Image(page_val, caption="page_val")],
-                    })
+        if epoch % UPLOAD_IMG == 0:
+            wandb.log({"result":[wandb.Image(page, caption="page"),wandb.Image(page_val, caption="page_val")]})
 
         
 

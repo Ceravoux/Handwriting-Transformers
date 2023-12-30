@@ -1022,7 +1022,7 @@ class TRGAN(nn.Module):
 
     def backward_G_only(self):
         
-        self.gb_alpha = 0.7
+        self.gb_alpha = 1.0
         #self.Lcycle1 = self.Lcycle1.mean()
         #self.Lcycle2 = self.Lcycle2.mean()
         self.loss_G = loss_hinge_gen(self.netD(**{'x': self.fake}), self.len_text_fake.detach(), True).mean()
@@ -1083,7 +1083,7 @@ class TRGAN(nn.Module):
 
     def backward_G_WL(self):
 
-        self.gb_alpha = 0.7
+        self.gb_alpha = 1.0
         #self.Lcycle1 = self.Lcycle1.mean()
         #self.Lcycle2 = self.Lcycle2.mean()
 
@@ -1137,7 +1137,7 @@ class TRGAN(nn.Module):
             self.loss_T.backward()
             
     def backward_G(self):
-        self.opt.gb_alpha = 0.7
+        self.opt.gb_alpha = 1
         self.loss_G = loss_hinge_gen(self.netD(**{'x': self.fake, 'z': self.z}), self.len_text_fake.detach(), self.opt.mask_loss)
         # OCR loss on real data
 
@@ -1154,7 +1154,7 @@ class TRGAN(nn.Module):
        # l1 = self.params[0]*self.loss_G
        # l2 = self.params[0]*self.loss_OCR_fake
         #l3 = self.params[0]*self.loss_w_fake
-        self.loss_G_ = 10*self.loss_G + self.loss_w_fake
+        self.loss_G_ = self.loss_G + self.loss_w_fake
         self.loss_T = self.loss_G_ + self.loss_OCR_fake
 
         grad_fake_OCR = torch.autograd.grad(self.loss_OCR_fake, self.fake, retain_graph=True)[0]
@@ -1164,7 +1164,7 @@ class TRGAN(nn.Module):
         grad_fake_adv = torch.autograd.grad(self.loss_G_, self.fake, retain_graph=True)[0]
         self.loss_grad_fake_adv = 10**6*torch.mean(grad_fake_adv**2)
         
-        if not False:
+        if not False: # What on earth is this condition?? 
 
             self.loss_T.backward(retain_graph=True)
 
